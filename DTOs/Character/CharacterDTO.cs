@@ -1,8 +1,9 @@
 using System;
+using Dotnetrpg.Models;
 
-namespace Dotnetrpg.Models
+namespace Dotnetrpg.DTOs.Character
 {
-    public class Character
+    public class CharacterDTO
     {
         public int Id {get; set;}
         public string Name {get; set;} = "frodo";
