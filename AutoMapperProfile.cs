@@ -8,7 +8,8 @@ namespace Dotnetrpg
     {
         public AutoMapperProfile()
         {
-            CreateMap<Character, CharacterDTO>();
+            CreateMap<Character, CharacterDTO>().ReverseMap();
+            CreateMap<AddCharacterDTO, Character>().ReverseMap();
         }
     }
 }
