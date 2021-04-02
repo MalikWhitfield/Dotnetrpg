@@ -12,15 +12,14 @@ namespace Dotnetrpg.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller")]
+    [Route("[controller]")]
     public class WeaponController : ControllerBase
     {
         private readonly IWeaponService _weaponService;
 
-        public WeaponController(IWeaponService weaponService, ICharacterService characterService)
+        public WeaponController(IWeaponService weaponService)
         {
             _weaponService = weaponService;
-
         }
 
         [HttpPost]
