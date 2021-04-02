@@ -14,6 +14,7 @@ namespace Dotnetrpg.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<CharacterSkill> CharacterSkills { get; set; }
+        public DbSet<Weapon> Weapons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

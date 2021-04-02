@@ -17,6 +17,7 @@ namespace Dotnetrpg.Models
         public DateTime DateCreated { get; set; }
         public User User { get; set; }
         public List<CharacterSkill> CharacterSkills { get; set; }
+        public Weapon Weapon { get; set; }
 
     }
 }
