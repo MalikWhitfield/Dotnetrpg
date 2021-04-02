@@ -15,7 +15,23 @@ namespace Dotnetrpg.Data
 
         public async Task<ServiceResponse<string>> Login(string username, string password)
         {
-            throw new System.NotImplementedException();
+            ServiceResponse<string> response = new ServiceResponse<string>();
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.Username.ToLower().Equals(username.ToLower()));
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "User not found";
+            }
+            else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            {
+                response.Success = false;
+                response.Message = "Username and password information incorrect.";
+            }
+            else
+            {
+                response.Data = user.Id.ToString();
+            }
+            return response;
         }
 
         public async Task<ServiceResponse<int>> Register(User user, string password)
@@ -34,6 +50,7 @@ namespace Dotnetrpg.Data
             await _context.SaveChangesAsync();
             ServiceResponse<int> response = new ServiceResponse<int>();
             response.Data = user.Id;
+            response.Success = true;
             return response;
         }
 
@@ -53,5 +70,21 @@ namespace Dotnetrpg.Data
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             };
         }
+        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+        {
+            using (var hmcac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
+            {
+                var computedHash = hmcac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                for (int i = 0; i < computedHash.Length; i++)
+                {
+                    if (computedHash[1] != passwordHash[1])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
     }
 }
