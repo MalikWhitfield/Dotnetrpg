@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using Dotnetrpg.DTOs.Character;
 using Dotnetrpg.Models;
 using Dotnetrpg.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnetrpg.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController : ControllerBase
@@ -24,7 +26,7 @@ namespace Dotnetrpg.Controllers
         {
             return Ok(await _characterService.GetCharacterById(id));
         }
-
+        // [AllowAnonymous]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

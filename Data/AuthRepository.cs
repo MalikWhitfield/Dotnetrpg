@@ -38,6 +38,7 @@ namespace Dotnetrpg.Data
             }
             else
             {
+                response.Success = true;
                 response.Data = CreateToken(user);
             }
             return response;

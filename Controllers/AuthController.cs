@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dotnetrpg.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AuthController : ControllerBase
