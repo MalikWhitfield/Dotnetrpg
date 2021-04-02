@@ -45,14 +45,14 @@ namespace Dotnetrpg.Services
             await _context.AddAsync(character);
             await _context.SaveChangesAsync();
 
-            serviceResponse.Data = _context.Characters.Where(c => c.User.Id == userId).Select(c => _mapper.Map<CharacterDTO>(c)).ToList();
+            serviceResponse.Data = _context.Characters.Include(c => c.User).Where(c => c.User.Id == userId).Select(c => _mapper.Map<CharacterDTO>(c)).ToList();
             return serviceResponse;
         }
 
         public async Task<ServiceResponse<List<CharacterDTO>>> GetAllCharacters()
         {
             ServiceResponse<List<CharacterDTO>> serviceResponse = new ServiceResponse<List<CharacterDTO>>();
-            List<Character> dbCharacters = await _context.Characters.Where(c => c.User.Id == GetUserId()).ToListAsync();
+            List<Character> dbCharacters = await _context.Characters.Include(c => c.User).Where(c => c.User.Id == GetUserId()).ToListAsync();
             serviceResponse.Data = dbCharacters.Select(c => _mapper.Map<CharacterDTO>(c)).ToList();
             return serviceResponse;
         }
@@ -60,7 +60,8 @@ namespace Dotnetrpg.Services
         public async Task<ServiceResponse<CharacterDTO>> GetCharacterById(int id)
         {
             ServiceResponse<CharacterDTO> serviceResponse = new ServiceResponse<CharacterDTO>();
-            Character character = await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+            int userId = GetUserId();
+            Character character = await _context.Characters.Include(c => c.User).FirstOrDefaultAsync(c => c.Id == id && c.User.Id == userId);
             serviceResponse.Data = _mapper.Map<CharacterDTO>(character);
             return serviceResponse;
         }

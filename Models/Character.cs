@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Dotnetrpg.Models
 {
@@ -15,5 +16,7 @@ namespace Dotnetrpg.Models
         public bool IsDeleted { get; set; } = false;
         public DateTime DateCreated { get; set; }
         public User User { get; set; }
+        public List<CharacterSkill> CharacterSkills { get; set; }
+
     }
 }
