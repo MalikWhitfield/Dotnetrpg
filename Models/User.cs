@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Dotnetrpg.Models
 {
-    public class User
+    public class User : ITrackable
     {
         public int Id { get; set; }
         public string Username { get; set; }
